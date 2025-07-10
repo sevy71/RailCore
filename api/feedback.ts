@@ -28,27 +28,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   // ---- THIS IS THE NEW SECTION ----
   try {
-    const promptText = `${SYSTEM_INSTRUCTION}\n\n${userPrompt}`;
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents: [
-        {
-          role: 'user',
-          parts: [{ text: promptText }]
-        }
-      ]
-    });
+  const response = await ai.models.generateContent({
+    model: 'gemini-2.5-flash',
+    contents: [
+      {
+        role: 'user',
+        parts: [{ text: userPrompt }]
+      }
+    ],
+    systemInstruction: SYSTEM_INSTRUCTION
+  });
 
-    return res.status(200).json({
-      text: response.text ||
-        response.candidates?.[0]?.content?.parts?.[0]?.text
-    });
+  return res.status(200).json({
+    text: response.text ||
+      response.candidates?.[0]?.content?.parts?.[0]?.text
+  });
 
-  } catch (e: any) {
-    console.error('Gemini API error:', e);
-    return res.status(500).json({
-      error: 'Failed to generate AI feedback.',
-      details: e?.message || e
-    });
-  }
+} catch (e: any) {
+  console.error('Gemini API error:', e);
+  return res.status(500).json({
+    error: 'Failed to generate AI feedback.',
+    details: e?.message || e
+  });
+}
 }
