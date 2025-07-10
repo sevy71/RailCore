@@ -5,7 +5,8 @@ const SYSTEM_INSTRUCTION = `You are Gemini-2.5, the AI Coach powering only these
 // ... (same as your previous)
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-    console.log("API key from env:", process.env.API_KEY);  // Debug log
+  console.log("API key from env:", process.env.API_KEY);  // Debug log
+
   if (req.method !== 'POST') {
     res.setHeader('Allow', ['POST']);
     return res.status(405).json({ error: 'Method Not Allowed' });
@@ -18,32 +19,36 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   let userPrompt = '';
 
   if (assessment === 'PersonalityQuestionnaire' && personalityResponses) {
-    // (as before) ...
-    // build `userPrompt`...
+    // (as before) ... build userPrompt here
   } else {
-    // (as before) ...
-    // build `userPrompt`...
+    // (as before) ... build userPrompt here
   }
 
   const ai = new GoogleGenAI({ apiKey: key });
 
-  const promptText = `${SYSTEM_INSTRUCTION}\n\n${userPrompt}`;
-const response: GenerateContentResponse = await ai.models.generateContent({
-  model: 'gemini-2.5-flash',
-  contents: [
-    {
-      role: 'user',
-      parts: [{ text: promptText }]
-    }
-  ]
-});
+  // ---- THIS IS THE NEW SECTION ----
+  try {
+    const promptText = `${SYSTEM_INSTRUCTION}\n\n${userPrompt}`;
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: [
+        {
+          role: 'user',
+          parts: [{ text: promptText }]
+        }
+      ]
+    });
 
-    // Some versions use response.candidates[0].content.parts[0].text
-    // or similar—check your SDK’s docs or console.log(response)
-    return res.status(200).json({ text: response.text || response.candidates?.[0]?.content?.parts?.[0]?.text });
+    return res.status(200).json({
+      text: response.text ||
+        response.candidates?.[0]?.content?.parts?.[0]?.text
+    });
 
   } catch (e: any) {
     console.error('Gemini API error:', e);
-    // Send more error detail back for easier debugging
-    return res.status(500).json({ error: 'Failed to generate AI feedback.', details: e?.message || e });
+    return res.status(500).json({
+      error: 'Failed to generate AI feedback.',
+      details: e?.message || e
+    });
   }
+}
