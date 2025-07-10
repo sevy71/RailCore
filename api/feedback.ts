@@ -5,6 +5,7 @@ const SYSTEM_INSTRUCTION = `You are Gemini-2.5, the AI Coach powering only these
 // ... (same as your previous)
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+    console.log("API key from env:", process.env.API_KEY);  // Debug log
   if (req.method !== 'POST') {
     res.setHeader('Allow', ['POST']);
     return res.status(405).json({ error: 'Method Not Allowed' });
@@ -43,6 +44,6 @@ const response: GenerateContentResponse = await ai.models.generateContent({
 
   } catch (e: any) {
     console.error('Gemini API error:', e);
-    return res.status(500).json({ error: 'Failed to generate AI feedback.' });
+    // Send more error detail back for easier debugging
+    return res.status(500).json({ error: 'Failed to generate AI feedback.', details: e?.message || e });
   }
-}
