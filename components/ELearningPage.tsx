@@ -2,7 +2,7 @@
 import React from 'react';
 import Button from './common/Button';
 import Card from './common/Card';
-import { CompetencyQuestionModule } from './CompetencyQuestionModule';
+import CompetencyQuestionModule from './CompetencyQuestionModule';
 import SituationalJudgementModule from './SituationalJudgementModule';
 import MathsTestModule from './MathsTestModule';
 
