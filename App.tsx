@@ -352,20 +352,22 @@ const App: React.FC = () => {
     }
   };
 
+  const renderMainPage = () => (
+    <>
+      <HeroSection />
+      <TestimonialsSection />
+      <JourneySection />
+      <ValuePropositionSection />
+      <div ref={contactSectionRef}>
+        <ContactSection />
+      </div>
+    </>
+  );
+
   const renderPage = () => {
     switch (currentPage) {
       case 'main':
-        return (
-          <>
-            <HeroSection />
-            <TestimonialsSection />
-            <JourneySection />
-            <ValuePropositionSection />
-            <div ref={contactSectionRef}>
-              <ContactSection />
-            </div>
-          </>
-        );
+        return renderMainPage();
       case 'meetTheTeam':
         return <MeetTheTeamPage navigateToMain={() => navigateTo('main')} />;
       case 'dayInTheLife':
@@ -385,17 +387,7 @@ const App: React.FC = () => {
       case 'benefits':
         return <BenefitsPage navigateToMain={() => navigateTo('main')} />;
       default:
-        return (
-          <>
-            <HeroSection />
-            <JourneySection />
-            <TestimonialsSection />
-            <ValuePropositionSection />
-            <div ref={contactSectionRef}>
-              <ContactSection />
-            </div>
-          </>
-        );
+        return renderMainPage();
     }
   };
 
