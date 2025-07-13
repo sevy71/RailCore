@@ -12,8 +12,8 @@ const Module6Icon: React.FC<{ className?: string }> = ({ className }) => <svg xm
 
 
 export const MODULE_COLORS = {
-    'railway-red':          { bg: 'bg-railway-red',          border: 'border-railway-red',          text: 'text-white',      iconColor: 'text-white', iconColorOnLightBg: 'text-railway-red' },
-    'railway-red-orange':   { bg: 'bg-railway-red-orange',   border: 'border-railway-red-orange',   text: 'text-white',      iconColor: 'text-white', iconColorOnLightBg: 'text-railway-red-orange' },
+    'railway-red':          { bg: 'bg-railway-red',          border: 'border-railway-red',          text: 'text-white', textOnLightBg: 'text-railway-red',     iconColor: 'text-white', iconColorOnLightBg: 'text-railway-red' },
+    'railway-red-orange':   { bg: 'bg-railway-red-orange',   border: 'border-railway-red-orange',   text: 'text-white', textOnLightBg: 'text-railway-red-orange', iconColor: 'text-white', iconColorOnLightBg: 'text-railway-red-orange' },
     'railway-orange':       { bg: 'bg-railway-orange',       border: 'border-railway-orange',       text: 'text-gray-800',   iconColor: 'text-gray-800', iconColorOnLightBg: 'text-railway-orange' }, 
     'railway-yellow':       { bg: 'bg-railway-yellow',       border: 'border-railway-yellow',       text: 'text-gray-800',   iconColor: 'text-gray-800', iconColorOnLightBg: 'text-railway-yellow' }, 
     'railway-yellow-green': { bg: 'bg-railway-yellow-green', border: 'border-railway-yellow-green', text: 'text-white',      iconColor: 'text-white', iconColorOnLightBg: 'text-railway-yellow-green' },
