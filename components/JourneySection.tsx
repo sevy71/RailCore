@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { MODULES_DATA, MODULE_COLORS } from '../constants';
 import Card from './common/Card';
