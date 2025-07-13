@@ -355,8 +355,8 @@ const App: React.FC = () => {
   const renderMainPage = () => (
     <>
       <HeroSection />
+       <JourneySection />
       <TestimonialsSection />
-      <JourneySection />
       <ValuePropositionSection />
       <div ref={contactSectionRef}>
         <ContactSection />
