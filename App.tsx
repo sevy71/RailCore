@@ -388,8 +388,8 @@ const App: React.FC = () => {
         return (
           <>
             <HeroSection />
-            <TestimonialsSection />
             <JourneySection />
+            <TestimonialsSection />
             <ValuePropositionSection />
             <div ref={contactSectionRef}>
               <ContactSection />
