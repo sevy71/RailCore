@@ -148,6 +148,32 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
       {
         type: 'tip',
         content: "<strong>The Future is Changing:</strong> Between 2025 and 2027, several franchised operators will transition to public ownership under new government contracts. This includes South Western Railway (May ’25), c2c (July ’25), and Greater Anglia, with more to follow. The landscape is constantly evolving as the industry moves towards the Great British Railways model."
+      },
+      {
+        type: 'heading',
+        content: 'Confirmed Nationalisation Timeline'
+      },
+      {
+        type: 'list',
+        content: [
+          "<strong>May 2025:</strong> South Western Railway transitions to public ownership.",
+          "<strong>July 2025:</strong> c2c follows suit.",
+          "<strong>Autumn 2025:</strong> Greater Anglia is scheduled for transition.",
+          "<strong>2025-2027:</strong> Other operators will follow approximately every 3 months through October 2027 under the Great British Railways model."
+        ]
+      },
+      {
+        type: 'heading',
+        content: 'Quick Takeaways'
+      },
+      {
+        type: 'list',
+        content: [
+          "<strong>Operator Landscape:</strong> The market consists of over 20 franchised/concession operators, around 5 open-access operators, and 7 currently state-owned entities.",
+          "<strong>Driver Pay:</strong> The typical annual salary range is £50k–£70k, with senior and high-speed roles exceeding £80k. London-based roles are often among the highest paid.",
+          "<strong>Core Benefits:</strong> Expect strong pension schemes, generous leave, shift premiums, free family travel, and robust union support.",
+          "<strong>Market Shift:</strong> While nationalisation is increasing, it's important to note that pay and benefits generally remain constant after the transition."
+        ]
       }
     ]
   }
