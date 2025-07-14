@@ -128,16 +128,19 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, onGetStartedClick, currentP
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      // Close "The Role" dropdown if click is outside
+      if (isTheRoleDropdownOpen && dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         if (closeDropdownTimerRef.current) {
           clearTimeout(closeDropdownTimerRef.current);
           closeDropdownTimerRef.current = null;
         }
         setIsTheRoleDropdownOpen(false);
       }
-      if (communityDropdownRef.current && !communityDropdownRef.current.contains(event.target as Node)) {
+      // Close "Community" dropdown if click is outside
+      if (isCommunityDropdownOpen && communityDropdownRef.current && !communityDropdownRef.current.contains(event.target as Node)) {
         if (closeCommunityDropdownTimerRef.current) {
           clearTimeout(closeCommunityDropdownTimerRef.current);
+          closeCommunityDropdownTimerRef.current = null;
         }
         setIsCommunityDropdownOpen(false);
       }
@@ -145,14 +148,10 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, onGetStartedClick, currentP
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
-      if (closeDropdownTimerRef.current) {
-        clearTimeout(closeDropdownTimerRef.current);
-      }
-      if (closeCommunityDropdownTimerRef.current) {
-        clearTimeout(closeCommunityDropdownTimerRef.current);
-      }
+      if (closeDropdownTimerRef.current) clearTimeout(closeDropdownTimerRef.current);
+      if (closeCommunityDropdownTimerRef.current) clearTimeout(closeCommunityDropdownTimerRef.current);
     };
-  }, []);
+  }, [isTheRoleDropdownOpen, isCommunityDropdownOpen]);
 
   return (
     <nav className="bg-brand-primary shadow-lg sticky top-0 z-50">
