@@ -163,7 +163,7 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, currentPage }) => {
             </button>
           </div>
 
-          <div className="hidden lg:flex lg:items-center lg:space-x-2">
+          <div className="flex items-center space-x-2">
             <div className="flex items-baseline space-x-2">
               <button onClick={() => navigateTo('main')} className={navLinkClasses('main')}>Home</button>
               <div
