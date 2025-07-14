@@ -131,7 +131,7 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, onGetStartedClick, currentP
             </button>
           </div>
 
-          <div className="hidden xl:flex xl:items-center xl:space-x-4">
+          <div className="hidden lg:flex lg:items-center lg:space-x-4">
             <div className="flex items-baseline space-x-4">
               <button onClick={() => navigateTo('main')} className={navLinkClasses('main')}>Home</button>
               <div
@@ -186,7 +186,7 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, onGetStartedClick, currentP
             </button>
           </div>
 
-          <div className="-mr-2 flex xl:hidden">
+          <div className="-mr-2 flex lg:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               type="button"
@@ -210,7 +210,7 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, onGetStartedClick, currentP
       </div>
 
       {isMobileMenuOpen && (
-        <div className="xl:hidden" id="mobile-menu">
+        <div className="lg:hidden" id="mobile-menu">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <button onClick={() => navAndClose('main')} className={mobileNavLinkClasses('main')}>Home</button>
             {/* Flattened "The Role" links */}
