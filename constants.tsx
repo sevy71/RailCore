@@ -55,32 +55,32 @@ export const MODULES_DATA: Module[] = [
   {
     id: '1', moduleNumber: 1, title: 'Pre-Application: Is This Career Right for You?',
     description: "Understand the realities of a train driver's life, assess your suitability, and prepare for the initial stages. Know what you're getting into.",
-    colorName: 'railway-red', stageIndicator: 'Starting Your Journey', icon: <Module1Icon />,
+    colorName: 'railway-red', stageIndicator: 'Starting Your Journey', icon: <Module1Icon />, // Red: Stop and assess
   },
   {
     id: '2', moduleNumber: 2, title: 'Mastering the Application: Stand Out From the Crowd',
     description: "Craft a compelling application that highlights your strengths and aligns with what recruiters are looking for. Avoid common pitfalls.",
-    colorName: 'railway-red-orange', stageIndicator: 'Building Momentum', icon: <Module2Icon />,
+    colorName: 'railway-orange', stageIndicator: 'Building Momentum', icon: <Module2Icon />, // Orange: Proceed with caution
   },
   {
     id: '3', moduleNumber: 3, title: 'Assessment Day Success: Tests & Interviews Demystified',
     description: "Insider strategies for psychometric tests, group exercises, and crucial interviews. Learn from those who design and run them.",
-    colorName: 'railway-orange', stageIndicator: 'Navigating Challenges', icon: <Module3Icon />,
+    colorName: 'railway-yellow', stageIndicator: 'Navigating Challenges', icon: <Module3Icon />, // Yellow: Key assessment phase
   },
   {
     id: '4', moduleNumber: 4, title: 'Medical & Fitness: Meeting the Standards',
     description: "Navigate the stringent medical and fitness requirements. Understand the tests and how to prepare for them effectively.",
-    colorName: 'railway-yellow', stageIndicator: 'Approaching Qualification', icon: <Module4Icon />,
+    colorName: 'railway-yellow', stageIndicator: 'Approaching Qualification', icon: <Module4Icon />, // Yellow: Key assessment phase
   },
   {
     id: '5', moduleNumber: 5, title: 'Initial Training & Route Learning: The Learning Curve',
     description: "What to expect during your intensive training period. Best practices for rules, regulations, and route knowledge acquisition.",
-    colorName: 'railway-yellow-green', stageIndicator: 'Gaining Expertise', icon: <Module5Icon />,
+    colorName: 'railway-yellow-green', stageIndicator: 'Gaining Expertise', icon: <Module5Icon />, // Yellow-Green: Approaching clear
   },
   {
     id: '6', moduleNumber: 6, title: 'Post-Qualification: Thriving in Your New Career',
     description: "Beyond just qualifying: tips for continuous development, handling challenges, and building a long, successful career on the rails.",
-    colorName: 'railway-green', stageIndicator: 'Career Success Achieved', icon: <Module6Icon />,
+    colorName: 'railway-green', stageIndicator: 'Career Success Achieved', icon: <Module6Icon />, // Green: Clear to proceed
   },
 ];
 
