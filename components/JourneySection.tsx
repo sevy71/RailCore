@@ -29,7 +29,7 @@ const JourneySection: React.FC = () => {
                   <div className={`p-6 ${colorScheme.bg} ${colorScheme.text} rounded-t-md flex items-center md:block`}>
                     {/* Icon for mobile */}
                     <div className={`md:hidden flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full ${colorScheme.text === 'text-white' ? 'bg-white bg-opacity-20' : 'bg-gray-200'} mr-4`}>
-                      {React.cloneElement(module.icon, { className: `w-7 h-7 ${colorScheme.text === 'text-white' ? colorScheme.iconColor : colorScheme.iconColorOnLightBg}`})}
+                      {React.cloneElement(module.icon, { className: `w-7 h-7 ${colorScheme.text === 'text-white' ? colorScheme.iconColorOnLightBg : colorScheme.iconColor}`})}
                     </div>
                     <div>
                       <h3 className={`text-2xl font-bold font-condensed ${index % 2 !== 0 ? 'md:text-right' : 'md:text-left'}`}>
