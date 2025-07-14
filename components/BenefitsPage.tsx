@@ -28,6 +28,35 @@ const BenefitsPage: React.FC<BenefitsPageProps> = ({ navigateToMain }) => {
     { icon: "🤝", title: "Union Representation", description: "Strong unions like ASLEF and RMT negotiate regular pay raises." },
   ];
 
+  const universalPerks = {
+    title: "Universal Rail-Wide Perks (Rail Staff Travel Framework)",
+    items: [
+      "<strong>TOC Privilege Card:</strong> Free travel on your own operator’s services (duty, commuting, leisure).",
+      "<strong>Nationwide Discount:</strong> 75% off leisure travel across other UK TOCs (off-peak & anytime).",
+      "<strong>Family Benefits:</strong> Free access for partners and children on leisure travel.",
+      "<strong>Reduced-Rate Season Ticket:</strong> 75% discount on season tickets for commuting.",
+      "<strong>International Travel:</strong> After 1 year, access to 50% off many European rail fares via a FIP card."
+    ]
+  };
+
+  const operatorSpecificPerks = [
+    { operator: "LNER", details: ["Free travel for driver + family on all LNER services.", "50% off international rail fares after one year."] },
+    { operator: "GTR (Thameslink, Southern, etc.)", details: ["Free travel on all GTR services.", "Free TfL travel via Priv-to-Oyster PAYG card."] },
+    { operator: "TransPennine Express (TPE)", details: ["Free travel on TPE services (plus 50% off for friends/family).", "10 free journeys on other FirstGroup TOCs annually."] },
+    { operator: "Southeastern", details: ["Free travel from day one on SE services.", "After 6 months, free Croydon Tramlink travel and ferry discounts."] },
+    { operator: "Northern, WMT, Merseyrail, etc.", details: ["Generally offer free travel on their own networks for staff and family, plus the standard 75% discount elsewhere."] }
+  ];
+
+  const limitsAndFlexibility = {
+      title: "Important Notes: Flexibilities & Limits",
+      items: [
+          "<strong>First-Class:</strong> Privilege cards are typically for standard class only; upgrades are not usually discounted.",
+          "<strong>TfL Access:</strong> Only GTR staff currently get integrated Oyster card benefits for TfL travel.",
+          "<strong>Sleeper Services:</strong> The 75% discount applies to Caledonian and GWR sleepers.",
+          "<strong>Penalty Risk:</strong> Misuse of travel cards can lead to penalties or card revocation."
+      ]
+  };
+
   return (
     <div className="bg-white py-16 md:py-24">
       <div className="container mx-auto px-6">
@@ -80,6 +109,51 @@ const BenefitsPage: React.FC<BenefitsPageProps> = ({ navigateToMain }) => {
               </Card>
             ))}
           </div>
+        </section>
+
+        <section id="travel-perks" className="mb-16 md:mb-20">
+            <h2 className="text-3xl font-bold font-condensed text-center text-brand-secondary mb-10">Travel Perks: A Detailed Breakdown</h2>
+            <div className="max-w-5xl mx-auto space-y-10">
+                <Card className="shadow-xl bg-gray-50 border-t-4 border-brand-primary">
+                    <div className="p-6 md:p-8">
+                        <h3 className="text-2xl font-semibold font-condensed text-brand-primary mb-4 flex items-center">
+                            <span className="text-3xl mr-3" aria-hidden="true">🌍</span> {universalPerks.title}
+                        </h3>
+                        <ul className="list-disc list-outside space-y-2 pl-5 text-gray-700">
+                            {universalPerks.items.map((item, index) => (
+                                <li key={index} dangerouslySetInnerHTML={{ __html: item }} />
+                            ))}
+                        </ul>
+                    </div>
+                </Card>
+
+                <Card className="shadow-xl">
+                    <div className="p-6 md:p-8">
+                        <h3 className="text-2xl font-semibold font-condensed text-brand-secondary mb-6">Operator-Specific Highlights</h3>
+                        <div className="grid md:grid-cols-2 gap-x-8 gap-y-6">
+                            {operatorSpecificPerks.map(op => (
+                                <div key={op.operator}>
+                                    <h4 className="font-semibold text-brand-primary">{op.operator}</h4>
+                                    <ul className="list-disc list-outside space-y-1 pl-5 text-sm text-gray-600 mt-1">
+                                        {op.details.map((detail, i) => <li key={i}>{detail}</li>)}
+                                    </ul>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </Card>
+
+                <Card className="shadow-xl bg-yellow-50 border-l-4 border-railway-orange">
+                    <div className="p-6">
+                        <h3 className="text-xl font-semibold text-railway-orange mb-3">{limitsAndFlexibility.title}</h3>
+                        <ul className="list-disc list-outside space-y-2 pl-5 text-sm text-gray-800">
+                            {limitsAndFlexibility.items.map((item, index) => (
+                                <li key={index} dangerouslySetInnerHTML={{ __html: item }} />
+                            ))}
+                        </ul>
+                    </div>
+                </Card>
+            </div>
         </section>
 
         <div className="mt-20 text-center">
