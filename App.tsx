@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom'; // Assuming react-router-dom is used
 import HeroSection from './components/HeroSection';
 import TestimonialsSection from './components/TestimonialsSection';
 import JourneySection from './components/JourneySection';
@@ -30,6 +29,7 @@ type PageView =
 
 interface HeaderProps {
   navigateTo: (page: PageView) => void;
+  onGetStartedClick: () => void;
   currentPage: PageView;
 }
 
@@ -37,7 +37,7 @@ interface FooterProps {
   navigateTo: (page: PageView) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ navigateTo, currentPage }) => {
+const Header: React.FC<HeaderProps> = ({ navigateTo, onGetStartedClick, currentPage }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isTheRoleDropdownOpen, setIsTheRoleDropdownOpen] = useState(false);
   const [isCommunityDropdownOpen, setIsCommunityDropdownOpen] = useState(false);
@@ -237,13 +237,12 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, currentPage }) => {
                 )}
               </div>
             </div>
-            <div className="flex items-center space-x-1">
-                <Link to="/listings" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Listings</Link>
-                <Link to="/login" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Log In</Link>
-                <Link to="/signup" className="bg-railway-green hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200 ease-in-out">
-                    Sign Up
-                </Link>
-            </div>
+            <button
+              onClick={onGetStartedClick}
+              className="bg-railway-green hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-railway-green focus:ring-offset-2 focus:ring-offset-brand-primary"
+            >
+              Get Started
+            </button>
           </div>
 
           <div className="-mr-2 flex lg:hidden">
@@ -282,11 +281,12 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, currentPage }) => {
             <button onClick={() => navAndClose('meetTheTeam')} className={mobileNavLinkClasses('meetTheTeam')}>Our Team</button>
             <button onClick={() => navAndClose('blog')} className={mobileNavLinkClasses('blog')}>Blog</button>
             <button onClick={() => navAndClose('forum')} className={mobileNavLinkClasses('forum')}>Forum</button>
-            <div className="border-t border-gray-700 mt-3 pt-3 space-y-1">
-                <Link to="/listings" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Listings</Link>
-                <Link to="/login" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Log In</Link>
-                <Link to="/signup" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Sign Up</Link>
-            </div>
+            <button
+              onClick={() => { onGetStartedClick(); setIsMobileMenuOpen(false); }}
+              className="mt-2 w-full text-center bg-railway-green hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200 ease-in-out"
+            >
+              Get Started
+            </button>
           </div>
         </div>
       )}
@@ -400,6 +400,17 @@ const App: React.FC = () => {
     window.scrollTo(0, 0);
   };
 
+  const handleGetStartedClick = () => {
+    if (currentPage !== 'main') {
+      navigateTo('main');
+      setTimeout(() => {
+        contactSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      contactSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const renderMainPage = () => (
     <>
       <HeroSection />
@@ -441,7 +452,7 @@ const App: React.FC = () => {
 
   return (
     <div className="font-sans bg-gray-100">
-      <Header navigateTo={navigateTo} currentPage={currentPage} />
+      <Header navigateTo={navigateTo} onGetStartedClick={handleGetStartedClick} currentPage={currentPage} />
       <main>
         {renderPage()}
       </main>
