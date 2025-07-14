@@ -173,8 +173,8 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, onGetStartedClick, currentP
                 )}
               </div>
               <button onClick={() => navigateTo('eLearning')} className={navLinkClasses('eLearning')}>E-Learning</button>
-              <button onClick={() => navigateTo('applicationProcess')} className={navLinkClasses('applicationProcess')}>Application Process</button>
-              <button onClick={() => navigateTo('meetTheTeam')} className={navLinkClasses('meetTheTeam')}>Meet the Team</button>
+              <button onClick={() => navigateTo('applicationProcess')} className={navLinkClasses('applicationProcess')}>Apply</button>
+              <button onClick={() => navigateTo('meetTheTeam')} className={navLinkClasses('meetTheTeam')}>Our Team</button>
               <button onClick={() => navigateTo('blog')} className={navLinkClasses('blog')}>Blog</button>
               <button onClick={() => navigateTo('forum')} className={navLinkClasses('forum')}>Forum</button>
             </div>
@@ -218,8 +218,8 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, onGetStartedClick, currentP
             <button onClick={() => navAndClose('prosCons')} className={mobileNavLinkClasses('prosCons')}>Pros &amp; Cons</button>
             <button onClick={() => navAndClose('benefits')} className={mobileNavLinkClasses('benefits')}>Benefits &amp; Rewards</button>
             <button onClick={() => navAndClose('eLearning')} className={mobileNavLinkClasses('eLearning')}>E-Learning</button>
-            <button onClick={() => navAndClose('applicationProcess')} className={mobileNavLinkClasses('applicationProcess')}>Application Process</button>
-            <button onClick={() => navAndClose('meetTheTeam')} className={mobileNavLinkClasses('meetTheTeam')}>Meet the Team</button>
+            <button onClick={() => navAndClose('applicationProcess')} className={mobileNavLinkClasses('applicationProcess')}>Apply</button>
+            <button onClick={() => navAndClose('meetTheTeam')} className={mobileNavLinkClasses('meetTheTeam')}>Our Team</button>
             <button onClick={() => navAndClose('blog')} className={mobileNavLinkClasses('blog')}>Blog</button>
             <button onClick={() => navAndClose('forum')} className={mobileNavLinkClasses('forum')}>Forum</button>
             <button
