@@ -52,7 +52,7 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, onGetStartedClick, currentP
   const isTheRoleActive = dropdownLinks.some(link => link.page === currentPage);
 
   const navLinkClasses = (pageName: PageView) =>
-    `px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ease-in-out ${
+    `px-2 py-2 rounded-md text-sm font-medium transition-colors duration-200 ease-in-out ${
       currentPage === pageName
         ? 'bg-brand-secondary text-white'
         : 'text-gray-300 hover:bg-gray-700 hover:text-white'
@@ -131,8 +131,8 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, onGetStartedClick, currentP
             </button>
           </div>
 
-          <div className="hidden lg:flex lg:items-center lg:space-x-4">
-            <div className="flex items-baseline space-x-4">
+          <div className="hidden lg:flex lg:items-center lg:space-x-2">
+            <div className="flex items-baseline space-x-2">
               <button onClick={() => navigateTo('main')} className={navLinkClasses('main')}>Home</button>
               <div
                 className="relative"
@@ -142,7 +142,7 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, onGetStartedClick, currentP
               >
                 <button
                   onClick={() => setIsTheRoleDropdownOpen(!isTheRoleDropdownOpen)}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ease-in-out ${
+                  className={`px-2 py-2 rounded-md text-sm font-medium transition-colors duration-200 ease-in-out ${
                     isTheRoleActive
                       ? 'bg-brand-secondary text-white'
                       : 'text-gray-300 hover:bg-gray-700 hover:text-white'
