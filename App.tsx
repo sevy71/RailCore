@@ -163,8 +163,8 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, currentPage }) => {
             </button>
           </div>
 
-          <div className="flex items-center space-x-2">
-            <div className="flex items-baseline space-x-2">
+          <div className="hidden lg:flex items-center space-x-6">
+            <div className="flex items-baseline space-x-1">
               <button onClick={() => navigateTo('main')} className={navLinkClasses('main')}>Home</button>
               <div
                 className="relative"
@@ -237,7 +237,7 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, currentPage }) => {
                 )}
               </div>
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-1">
                 <Link to="/listings" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Listings</Link>
                 <Link to="/login" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Log In</Link>
                 <Link to="/signup" className="bg-railway-green hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200 ease-in-out">
