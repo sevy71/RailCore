@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import HeroSection from './components/HeroSection';
 import TestimonialsSection from './components/TestimonialsSection';
 import JourneySection from './components/JourneySection';
@@ -39,20 +38,15 @@ interface FooterProps {
 
 const Header: React.FC<HeaderProps> = ({ navigateTo, onGetStartedClick, currentPage }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isTheRoleDropdownOpen, setIsTheRoleDropdownOpen] = useState(false);
-  const [isCommunityDropdownOpen, setIsCommunityDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const communityDropdownRef = useRef<HTMLDivElement>(null);
-  const closeDropdownTimerRef = useRef<number | null>(null);
-  const closeCommunityDropdownTimerRef = useRef<number | null>(null);
 
   const dropdownLinks = [
     { name: "Day in the Life", page: "dayInTheLife" as PageView },
     { name: "Pros & Cons", page: "prosCons" as PageView },
-    { name: "Benefits & Rewards", page: "benefits" as PageView },
+    { name: "Rewards", page: "benefits" as PageView },
   ];
 
   const communityDropdownLinks = [
+    { name: "Our Team", page: "meetTheTeam" as PageView },
     { name: "Blog", page: "blog" as PageView },
     { name: "Forum", page: "forum" as PageView },
   ];
@@ -81,77 +75,14 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, onGetStartedClick, currentP
         : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
     }`;
 
-  const openDropdown = () => {
-    if (closeDropdownTimerRef.current) {
-      clearTimeout(closeDropdownTimerRef.current);
-      closeDropdownTimerRef.current = null;
-    }
-    setIsTheRoleDropdownOpen(true);
-  };
-
-  const closeDropdownWithDelay = () => {
-    closeDropdownTimerRef.current = window.setTimeout(() => {
-      setIsTheRoleDropdownOpen(false);
-    }, 300); // 300ms delay
-  };
-
-  const openCommunityDropdown = () => {
-    if (closeCommunityDropdownTimerRef.current) {
-      clearTimeout(closeCommunityDropdownTimerRef.current);
-      closeCommunityDropdownTimerRef.current = null;
-    }
-    setIsCommunityDropdownOpen(true);
-  };
-
-  const closeCommunityDropdownWithDelay = () => {
-    closeCommunityDropdownTimerRef.current = window.setTimeout(() => {
-      setIsCommunityDropdownOpen(false);
-    }, 300); // 300ms delay
-  };
-
-  const handleDropdownItemClick = (page: PageView) => {
-    // 1) close menus
-    setIsTheRoleDropdownOpen(false);
-    setIsCommunityDropdownOpen(false);
-    setIsMobileMenuOpen(false);
-
-    // 2) navigate *after* a tiny delay so the menu actually un-mounts first
-    setTimeout(() => {
-      navigateTo(page);
-    }, 100);
-  };
+  // Dropdown state and handlers removed
 
   const navAndClose = (page: PageView) => {
     setIsMobileMenuOpen(false);
     navigateTo(page);
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      // Close "The Role" dropdown if click is outside
-      if (isTheRoleDropdownOpen && dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        if (closeDropdownTimerRef.current) {
-          clearTimeout(closeDropdownTimerRef.current);
-          closeDropdownTimerRef.current = null;
-        }
-        setIsTheRoleDropdownOpen(false);
-      }
-      // Close "Community" dropdown if click is outside
-      if (isCommunityDropdownOpen && communityDropdownRef.current && !communityDropdownRef.current.contains(event.target as Node)) {
-        if (closeCommunityDropdownTimerRef.current) {
-          clearTimeout(closeCommunityDropdownTimerRef.current);
-          closeCommunityDropdownTimerRef.current = null;
-        }
-        setIsCommunityDropdownOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      if (closeDropdownTimerRef.current) clearTimeout(closeDropdownTimerRef.current);
-      if (closeCommunityDropdownTimerRef.current) clearTimeout(closeCommunityDropdownTimerRef.current);
-    };
-  }, [isTheRoleDropdownOpen, isCommunityDropdownOpen]);
+  // Dropdown click outside logic removed
 
   return (
     <nav className="bg-brand-primary shadow-lg sticky top-0 z-50">
@@ -166,75 +97,33 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, onGetStartedClick, currentP
           <div className="hidden lg:flex items-center space-x-6">
             <div className="flex items-baseline space-x-1">
               <button onClick={() => navigateTo('main')} className={navLinkClasses('main')}>Home</button>
-              <div
-                className="relative"
-                ref={dropdownRef}
-                onMouseEnter={openDropdown}
-                onMouseLeave={closeDropdownWithDelay}
-              >
+              {/* Flattened "The Role" dropdown: render as separate buttons */}
+              {dropdownLinks.map(link => (
                 <button
-                  onClick={() => setIsTheRoleDropdownOpen(!isTheRoleDropdownOpen)}
-                  className={`px-2 py-2 rounded-md text-sm font-medium transition-colors duration-200 ease-in-out ${
-                    isTheRoleActive
-                      ? 'bg-brand-secondary text-white'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                  }`}
-                  aria-haspopup="true"
-                  aria-expanded={isTheRoleDropdownOpen}
+                  key={link.page}
+                  onClick={() => navAndClose(link.page)}
+                  className={navLinkClasses(link.page)}
                 >
-                  The Role
-                  <svg className={`inline-block ml-1 h-4 w-4 transition-transform duration-200 ${isTheRoleDropdownOpen ? 'transform rotate-180' : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
+                  {link.name}
                 </button>
-                {isTheRoleDropdownOpen && (
-                    <div
-                      className="absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1 z-50 p-1 space-y-1"
-                    >
-                      {dropdownLinks.map(link => (
-                        <button
-                          key={link.page}
-                          onClick={() => handleDropdownItemClick(link.page)}
-                          className={dropdownItemClasses(link.page)}
-                          role="menuitem"
-                        >
-                          {link.name}
-                        </button>
-                      ))}
-                    </div>
-                )}
-              </div>
+              ))}
               <button onClick={() => navigateTo('eLearning')} className={navLinkClasses('eLearning')}>E-Learning</button>
               <button onClick={() => navigateTo('applicationProcess')} className={navLinkClasses('applicationProcess')}>Apply</button>
-              <button onClick={() => navigateTo('meetTheTeam')} className={navLinkClasses('meetTheTeam')}>Our Team</button>
-              <div
-                className="relative"
-                ref={communityDropdownRef}
-                onMouseEnter={openCommunityDropdown}
-                onMouseLeave={closeCommunityDropdownWithDelay}
-              >
-                <button
-                  onClick={() => setIsCommunityDropdownOpen(!isCommunityDropdownOpen)}
-                  className={`px-2 py-2 rounded-md text-sm font-medium transition-colors duration-200 ease-in-out ${
-                    isCommunityActive
-                      ? 'bg-brand-secondary text-white'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                  }`}
-                  aria-haspopup="true"
-                  aria-expanded={isCommunityDropdownOpen}
-                >
-                  Community
-                  <svg className={`inline-block ml-1 h-4 w-4 transition-transform duration-200 ${isCommunityDropdownOpen ? 'transform rotate-180' : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
+              <div className="relative inline-block group">
+                <button className={navLinkClasses('')} onClick={() => {}}>
+                  More
                 </button>
-                {isCommunityDropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1 z-50 p-1 space-y-1">
-                      {communityDropdownLinks.map(link => (
-                        <button key={link.page} onClick={() => handleDropdownItemClick(link.page)} className={dropdownItemClasses(link.page)} role="menuitem">{link.name}</button>
-                      ))}
-                    </div>
-                )}
+                <div className="absolute left-0 mt-2 w-40 bg-white rounded-md shadow-lg hidden group-hover:block transition z-50">
+                  {communityDropdownLinks.map(link => (
+                    <button
+                      key={link.page}
+                      onClick={() => navAndClose(link.page)}
+                      className={dropdownItemClasses(link.page)}
+                    >
+                      {link.name}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
             <button
@@ -275,12 +164,15 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, onGetStartedClick, currentP
             {/* Flattened "The Role" links */}
             <button onClick={() => navAndClose('dayInTheLife')} className={mobileNavLinkClasses('dayInTheLife')}>Day in the Life</button>
             <button onClick={() => navAndClose('prosCons')} className={mobileNavLinkClasses('prosCons')}>Pros &amp; Cons</button>
-            <button onClick={() => navAndClose('benefits')} className={mobileNavLinkClasses('benefits')}>Benefits &amp; Rewards</button>
+            <button onClick={() => navAndClose('benefits')} className={mobileNavLinkClasses('benefits')}>Rewards</button>
             <button onClick={() => navAndClose('eLearning')} className={mobileNavLinkClasses('eLearning')}>E-Learning</button>
             <button onClick={() => navAndClose('applicationProcess')} className={mobileNavLinkClasses('applicationProcess')}>Apply</button>
-            <button onClick={() => navAndClose('meetTheTeam')} className={mobileNavLinkClasses('meetTheTeam')}>Our Team</button>
-            <button onClick={() => navAndClose('blog')} className={mobileNavLinkClasses('blog')}>Blog</button>
-            <button onClick={() => navAndClose('forum')} className={mobileNavLinkClasses('forum')}>Forum</button>
+            <div>
+              <h3 className="px-3 py-2 text-gray-400 uppercase tracking-wider">Community</h3>
+              <button onClick={() => navAndClose('meetTheTeam')} className={mobileNavLinkClasses('meetTheTeam')}>Our Team</button>
+              <button onClick={() => navAndClose('blog')} className={mobileNavLinkClasses('blog')}>Blog</button>
+              <button onClick={() => navAndClose('forum')} className={mobileNavLinkClasses('forum')}>Forum</button>
+            </div>
             <button
               onClick={() => { onGetStartedClick(); setIsMobileMenuOpen(false); }}
               className="mt-2 w-full text-center bg-railway-green hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200 ease-in-out"
@@ -452,7 +344,11 @@ const App: React.FC = () => {
 
   return (
     <div className="font-sans bg-gray-100">
-      <Header navigateTo={navigateTo} onGetStartedClick={handleGetStartedClick} currentPage={currentPage} />
+      <Header
+        navigateTo={navigateTo}
+        onGetStartedClick={handleGetStartedClick}
+        currentPage={currentPage}
+      />
       <main>
         {renderPage()}
       </main>
