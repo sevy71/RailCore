@@ -29,7 +29,7 @@ const Header: React.FC = () => {
             </NavLink>
           </div>
 
-          {/* Desktop menu */}
+          {/* Main menu */}
           <div className="hidden lg:flex items-center space-x-6">
             {renderLink('/', 'Home')}
             {renderLink('/day-in-the-life', 'Day in the Life')}
@@ -37,7 +37,7 @@ const Header: React.FC = () => {
             {renderLink('/rewards', 'Rewards')}
             {renderLink('/e-learning', 'E-Learning')}
             {renderLink('/apply', 'Apply')}
-            {renderLink('/our-team', 'Meet the Team')}
+            {renderLink('/team', 'Our Team')}
             {renderLink('/blog', 'Blog')}
             <a
               href="https://github.com/sevy71/railcore/discussions"
@@ -47,7 +47,6 @@ const Header: React.FC = () => {
             >
               Forum
             </a>
-            {renderLink('/get-started', 'Get Started')}
           </div>
 
           {/* Mobile menu button */}
@@ -77,14 +76,14 @@ const Header: React.FC = () => {
 
       {/* Mobile menu */}
       <div id="mobile-menu" className={`${isMobileMenuOpen ? 'block' : 'hidden'} lg:hidden`}>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 px-2 pt-2 pb-3 space-y-1">
+        <div className="space-y-1 px-4 py-2">
           {renderLink('/', 'Home')}
           {renderLink('/day-in-the-life', 'Day in the Life')}
           {renderLink('/pros-cons', 'Pros & Cons')}
           {renderLink('/rewards', 'Rewards')}
           {renderLink('/e-learning', 'E-Learning')}
           {renderLink('/apply', 'Apply')}
-          {renderLink('/our-team', 'Meet the Team')}
+          {renderLink('/team', 'Our Team')}
           {renderLink('/blog', 'Blog')}
           <a
             href="https://github.com/sevy71/railcore/discussions"
@@ -94,7 +93,6 @@ const Header: React.FC = () => {
           >
             Forum
           </a>
-          {renderLink('/get-started', 'Get Started')}
         </div>
       </div>
     </nav>
