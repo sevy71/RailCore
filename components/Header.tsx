@@ -25,7 +25,7 @@ const Header: React.FC = () => {
         <div className="flex items-center justify-between min-h-[4rem] py-3">
           <div className="flex-shrink-0 flex items-center">
             <NavLink to="/" className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-brand-primary focus:ring-white rounded-md">
-              <img src="RailCore_Logo_New.jpeg" alt="RailCore Logo" className="h-10 w-auto" />
+              <img src="public/RailCore_Logo_New.jpeg" alt="RailCore Logo" className="h-10 w-auto" />
             </NavLink>
           </div>
 
