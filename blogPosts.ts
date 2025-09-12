@@ -2,6 +2,72 @@ import { BlogPost } from './types';
 
 export const BLOG_POSTS_DATA: BlogPost[] = [
   {
+    id: 'gbr-reforms-and-rail-jobs',
+    title: 'The Future of UK Rail Jobs: Understanding GBR Reforms',
+    author: 'David Evans',
+    date: 'July 2, 2025',
+    excerpt: 'A look at the upcoming Great British Railways (GBR) reforms and what they mean for job security, new roles, and the future for aspiring and current train drivers.',
+    content: [
+      {
+        type: 'paragraph',
+        content: "The revised British Rail plans — part of the broader rail reform under Great British Railways (GBR) — are intended to transform how the UK’s rail system is operated. These changes have significant implications for jobs going forward, both positive and uncertain. Here’s a breakdown of what it could mean:"
+      },
+      {
+        type: 'heading',
+        content: '🔄 What Is Changing?'
+      },
+      {
+        type: 'list',
+        content: [
+          "<strong>Great British Railways (GBR)</strong> is being set up to integrate track and train operations, ending the fragmentation caused by the current separation between Network Rail (infrastructure) and train operating companies (TOCs).",
+          "GBR will take over long-term planning, ticketing, timetables, and branding.",
+          "TOCs will work under <strong>Passenger Service Contracts</strong> (more like concessions than current franchises), focusing on service delivery rather than revenue risk."
+        ]
+      },
+      {
+        type: 'heading',
+        content: '👷 What It Could Mean for Jobs'
+      },
+      {
+        type: 'heading',
+        content: '✅ Potential Job Growth or Stability'
+      },
+      {
+        type: 'list',
+        content: [
+          "<strong>Operations & Infrastructure:</strong> GBR may require more planners, engineers, and asset managers due to integrated planning and control. A centralised operations model could increase control room staff, data analysts, and scheduling roles.",
+          "<strong>Customer Service Roles:</strong> Simplified ticketing and more unified branding could expand roles in passenger experience, customer support, and station management.",
+          "<strong>Rail Freight:</strong> GBR is committed to growing rail freight. This may mean increased demand for freight drivers, logistics managers, and signallers supporting freight paths.",
+          "<strong>Digital and Tech Roles:</strong> Rail modernisation, like digital signalling (ETCS) and improved ticketing systems, may open new roles in IT, cybersecurity, and automation technology."
+        ]
+      },
+      {
+        type: 'heading',
+        content: '⚠️ Risks or Uncertainty'
+      },
+      {
+        type: 'list',
+        content: [
+          "<strong>Train Operating Companies (TOCs):</strong> With service contracts rather than franchises, TOCs will lose commercial freedom — this could lead to streamlining of management roles and fewer marketing or revenue-focused positions.",
+          "<strong>Redundancies in Overlapping Roles:</strong> As GBR consolidates responsibilities from Network Rail and the Department for Transport, some back-office roles may be merged or cut (e.g. HR, finance, policy).",
+          "<strong>Driver Training and Mobility:</strong> Initially, driver recruitment and training should continue or grow. But in the long term, standardisation of fleets and training across regions may affect how and where drivers are trained and deployed."
+        ]
+      },
+      {
+        type: 'heading',
+        content: '📈 For Train Drivers and Frontline Staff'
+      },
+      {
+        type: 'paragraph',
+        content: "GBR has stated that frontline rail staff will remain critical, and unions have pushed for protections."
+      },
+      {
+        type: 'paragraph',
+        content: "A more unified system could lead to clearer career progression and cross-operator mobility for roles like drivers, guards, and customer assistants."
+      }
+    ]
+  },
+  {
     id: 'mastering-the-driver-manager-interview',
     title: 'Mastering the Driver Manager Interview',
     author: 'Dave Evans',

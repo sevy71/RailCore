@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import HeroSection from './components/HeroSection';
 import TestimonialsSection from './components/TestimonialsSection';
 import JourneySection from './components/JourneySection';
@@ -8,11 +8,14 @@ import MeetTheTeamPage from './components/MeetTheTeamPage'; // Changed from Abou
 import DayInTheLifePage from './components/DayInTheLifePage';
 import ELearningPage from './components/ELearningPage';
 import ApplicationProcessPage from './components/ApplicationProcessPage';
-import ForumPage from './components/ForumPage';
 import BlogPage from './components/BlogPage';
 import ProsConsPage from './components/ProsConsPage';
 import BenefitsPage from './components/BenefitsPage';
 import BlogPostPage from './components/BlogPostPage.tsx'; // New import
+import { BLOG_POSTS_DATA } from './blogPosts';
+import { setSeo, setArticleJsonLd } from './seo';
+import NotFoundPage from './components/NotFoundPage';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 // Expanded PageView type
 type PageView =
@@ -21,7 +24,6 @@ type PageView =
   | 'dayInTheLife'
   | 'eLearning'
   | 'applicationProcess'
-  | 'forum'
   | 'blog'
   | 'prosCons'
   | 'benefits';
@@ -44,16 +46,11 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, onGetStartedClick, currentP
     { name: "Pros & Cons", page: "prosCons" as PageView },
     { name: "Rewards", page: "benefits" as PageView },
   ];
-
-  const communityDropdownLinks = [
-    { name: "Our Team", page: "meetTheTeam" as PageView },
-    { name: "Blog", page: "blog" as PageView },
-    { name: "Forum", page: "forum" as PageView },
+  const communityDropdownLinks: ({ name: string; page: PageView; href?: undefined } | { name: string; href: string; page?: undefined })[] = [
+    { name: "Our Team", page: "meetTheTeam" },
+    { name: "Blog", page: "blog" },
+    { name: "Forum", href: "https://railforums.co.uk/forums/railway-jobs-recruitment-training.109/" },
   ];
-
-  const isTheRoleActive = dropdownLinks.some(link => link.page === currentPage);
-  const isCommunityActive = communityDropdownLinks.some(link => link.page === currentPage);
-
   const navLinkClasses = (pageName: PageView) =>
     `px-2 py-2 rounded-md text-sm font-medium transition-colors duration-200 ease-in-out ${
       currentPage === pageName
@@ -90,42 +87,43 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, onGetStartedClick, currentP
         <div className="flex items-center justify-between min-h-[4rem] py-3">
           <div className="flex-shrink-0 flex items-center">
             <button onClick={() => navigateTo('main')} className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-brand-primary focus:ring-white rounded-md">
-              <img src="RailCore_Logo_New.jpeg" alt="RailCore Logo" className="h-10 w-auto" />
+              <img src="/RailCore_Logo_New.jpeg" alt="RailCore Logo" className="h-10 w-auto" />
             </button>
           </div>
-
-          <div className="hidden lg:flex items-center space-x-6">
-            <div className="flex items-baseline space-x-1">
-              <button onClick={() => navigateTo('main')} className={navLinkClasses('main')}>Home</button>
-              {/* Flattened "The Role" dropdown: render as separate buttons */}
-              {dropdownLinks.map(link => (
-                <button
-                  key={link.page}
-                  onClick={() => navAndClose(link.page)}
-                  className={navLinkClasses(link.page)}
-                >
-                  {link.name}
-                </button>
-              ))}
-              <button onClick={() => navigateTo('eLearning')} className={navLinkClasses('eLearning')}>E-Learning</button>
-              <button onClick={() => navigateTo('applicationProcess')} className={navLinkClasses('applicationProcess')}>Apply</button>
-              <div className="relative inline-block group">
-                <button className={navLinkClasses('')} onClick={() => {}}>
-                  More
-                </button>
-                <div className="absolute left-0 mt-2 w-40 bg-white rounded-md shadow-lg hidden group-hover:block transition z-50">
-                  {communityDropdownLinks.map(link => (
-                    <button
-                      key={link.page}
-                      onClick={() => navAndClose(link.page)}
-                      className={dropdownItemClasses(link.page)}
-                    >
-                      {link.name}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
+          
+          <div className="hidden xl:flex items-center space-x-4">
+            <button onClick={() => navigateTo('main')} className={navLinkClasses('main')}>
+              Home
+            </button>
+            <button onClick={() => navAndClose('dayInTheLife')} className={navLinkClasses('dayInTheLife')}>
+              Day in the Life
+            </button>
+            <button onClick={() => navAndClose('prosCons')} className={navLinkClasses('prosCons')}>
+              Pros &amp; Cons
+            </button>
+            <button onClick={() => navAndClose('benefits')} className={navLinkClasses('benefits')}>
+              Rewards
+            </button>
+            <button onClick={() => navigateTo('eLearning')} className={navLinkClasses('eLearning')}>
+              E-Learning
+            </button>
+            <button onClick={() => navigateTo('applicationProcess')} className={navLinkClasses('applicationProcess')}>
+              Apply
+            </button>
+            <button onClick={() => navAndClose('meetTheTeam')} className={navLinkClasses('meetTheTeam')}>
+              Our Team
+            </button>
+            <button onClick={() => navAndClose('blog')} className={navLinkClasses('blog')}>
+              Blog
+            </button>
+            <a
+              href="https://railforums.co.uk/forums/railway-jobs-recruitment-training.109/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={navLinkClasses('')}
+            >
+              Forum
+            </a>
             <button
               onClick={onGetStartedClick}
               className="bg-railway-green hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-railway-green focus:ring-offset-2 focus:ring-offset-brand-primary"
@@ -169,9 +167,33 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, onGetStartedClick, currentP
             <button onClick={() => navAndClose('applicationProcess')} className={mobileNavLinkClasses('applicationProcess')}>Apply</button>
             <div>
               <h3 className="px-3 py-2 text-gray-400 uppercase tracking-wider">Community</h3>
+<<<<<<< HEAD
               <button onClick={() => navAndClose('meetTheTeam')} className={mobileNavLinkClasses('meetTheTeam')}>Our Team</button>
               <button onClick={() => navAndClose('blog')} className={mobileNavLinkClasses('blog')}>Blog</button>
               <button onClick={() => navAndClose('forum')} className={mobileNavLinkClasses('forum')}>Forum</button>
+=======
+              {communityDropdownLinks.map(link => (
+                link.href ? (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={mobileNavLinkClasses('')} // No active state
+                  >
+                    {link.name}
+                  </a>
+                ) : (
+                  <button
+                    key={link.page}
+                    onClick={() => navAndClose(link.page!)}
+                    className={mobileNavLinkClasses(link.page!)}
+                  >
+                    {link.name}
+                  </button>
+                )
+              ))}
+>>>>>>> 702f465 (SEO + routing overhaul: path routes, prerendered pages (blog + core), dynamic OG images, JSON-LD breadcrumbs, runtime SEO helper, sitemap/robots; security hardening (rate limit + validation); XSS sanitization; 404 page)
             </div>
             <button
               onClick={() => { onGetStartedClick(); setIsMobileMenuOpen(false); }}
@@ -209,11 +231,11 @@ const Footer: React.FC<FooterProps> = ({ navigateTo }) => {
     {
       title: 'Community',
       links: [
-        { name: 'Forum', page: 'forum' as PageView },
+        { name: 'Forum', href: 'https://railforums.co.uk/forums/railway-jobs-recruitment-training.109/' },
         { name: 'Blog', page: 'blog' as PageView },
         { name: 'Contact Us', targetSectionId: 'contact' },
       ],
-    },
+    }, 
   ];
 
   const handleFooterLinkClick = (page?: PageView, targetSectionId?: string) => {
@@ -241,7 +263,7 @@ const Footer: React.FC<FooterProps> = ({ navigateTo }) => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div className="md:col-span-1 mb-6 md:mb-0">
             <button onClick={() => handleFooterLinkClick('main')} className="inline-block mb-3 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-brand-secondary focus:ring-white rounded-md">
-            <img src="RailCore_Logo_New.jpeg" alt="RailCore Logo" className="h-10 w-auto" />
+            <img src="/RailCore_Logo_New.jpeg" alt="RailCore Logo" className="h-10 w-auto" />
             </button>
             <p className="text-sm">
               Your comprehensive guide to starting and succeeding in a train driving career.
@@ -254,12 +276,23 @@ const Footer: React.FC<FooterProps> = ({ navigateTo }) => {
               <ul className="space-y-2">
                 {group.links.map((link) => (
                   <li key={link.name}>
-                    <button
-                      onClick={() => handleFooterLinkClick(link.page, link.targetSectionId)}
-                      className="hover:text-railway-yellow-green transition-colors duration-200 text-sm"
-                    >
-                      {link.name}
-                    </button>
+                    {(link as any).href ? (
+                      <a
+                        href={(link as any).href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-railway-yellow-green transition-colors duration-200 text-sm"
+                      >
+                        {link.name}
+                      </a>
+                    ) : (
+                      <button
+                        onClick={() => handleFooterLinkClick((link as any).page, (link as any).targetSectionId)}
+                        className="hover:text-railway-yellow-green transition-colors duration-200 text-sm"
+                      >
+                        {link.name}
+                      </button>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -285,10 +318,23 @@ const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<PageView>('main');
   const [viewingPostId, setViewingPostId] = useState<string | null>(null);
   const contactSectionRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const navigateTo = (page: PageView) => {
+    const map: Record<PageView, string> = {
+      main: '/',
+      meetTheTeam: '/meet-the-team',
+      dayInTheLife: '/day-in-the-life',
+      eLearning: '/e-learning',
+      applicationProcess: '/apply',
+      blog: '/blog',
+      prosCons: '/pros-cons',
+      benefits: '/benefits',
+    };
     setCurrentPage(page);
-    setViewingPostId(null); // Reset blog post view on any main navigation change
+    setViewingPostId(null);
+    navigate(map[page]);
     window.scrollTo(0, 0);
   };
 
@@ -327,12 +373,10 @@ const App: React.FC = () => {
         return <ELearningPage navigateToMain={() => navigateTo('main')} />;
       case 'applicationProcess':
         return <ApplicationProcessPage navigateToMain={() => navigateTo('main')} />;
-      case 'forum':
-        return <ForumPage navigateToMain={() => navigateTo('main')} />;
       case 'blog':
         return viewingPostId 
-          ? <BlogPostPage postId={viewingPostId} onBack={() => setViewingPostId(null)} />
-          : <BlogPage onViewPost={(id) => { setViewingPostId(id); window.scrollTo(0, 0); }} />;
+          ? <BlogPostPage postId={viewingPostId} onBack={() => { setViewingPostId(null); navigate('/blog'); }} />
+          : <BlogPage onViewPost={(id) => { setViewingPostId(id); navigate(`/blog/${id}`); window.scrollTo(0, 0); }} />;
       case 'prosCons':
         return <ProsConsPage navigateToMain={() => navigateTo('main')} />;
       case 'benefits':
@@ -342,6 +386,97 @@ const App: React.FC = () => {
     }
   };
 
+  // Unknown path handling for real routes
+  const isKnownPath = (() => {
+    const p = location.pathname;
+    if (p === '/') return true;
+    const known = ['/meet-the-team','/day-in-the-life','/e-learning','/apply','/blog','/pros-cons','/benefits'];
+    if (known.includes(p)) return true;
+    if (p.startsWith('/blog/')) return true;
+    return false;
+  })();
+
+  // Update SEO metadata on page/post change
+  useEffect(() => {
+    const baseDesc = 'Your comprehensive guide to starting and succeeding in a train driving career. Interactive e‑learning, interview prep, and insider insights.';
+    if (currentPage === 'blog' && viewingPostId) {
+      const post = BLOG_POSTS_DATA.find(p => p.id === viewingPostId);
+      if (post) {
+        const url = `/blog/${post.id}`;
+        setSeo({
+          title: `${post.title} | RailCore Blog`,
+          description: post.excerpt,
+          url,
+          canonical: url,
+          type: 'article',
+        });
+        setArticleJsonLd({
+          headline: post.title,
+          description: post.excerpt,
+          url,
+          datePublished: post.date,
+          authorName: post.author,
+          image: '/RailCore_Logo_New.jpeg',
+        });
+        return;
+      }
+    }
+
+    // Page-level SEO fallbacks
+    const pageTitles: Record<PageView, string> = {
+      main: 'RailCore — Train Driver Career Guide & E‑Learning',
+      meetTheTeam: 'Our Team | RailCore',
+      dayInTheLife: 'A Day in the Life of a Train Driver | RailCore',
+      eLearning: 'Interactive E‑Learning for Train Driver Applicants | RailCore',
+      applicationProcess: 'Application Process | RailCore',
+      blog: 'The RailCore Blog — Tips and Insights',
+      prosCons: 'Pros & Cons of Being a Train Driver | RailCore',
+      benefits: 'Rewards & Benefits | RailCore',
+    };
+
+    const pathMap: Record<PageView, string> = {
+      main: '/',
+      meetTheTeam: '/meet-the-team',
+      dayInTheLife: '/day-in-the-life',
+      eLearning: '/e-learning',
+      applicationProcess: '/apply',
+      blog: '/blog',
+      prosCons: '/pros-cons',
+      benefits: '/benefits',
+    };
+    const url = pathMap[currentPage] || '/';
+    setSeo({
+      title: pageTitles[currentPage] || 'RailCore',
+      description: baseDesc,
+      url,
+      canonical: url,
+      type: 'website',
+    });
+  }, [currentPage, viewingPostId]);
+
+  // Sync internal state from path (supports direct loads and back/forward)
+  useEffect(() => {
+    const p = location.pathname;
+    if (p.startsWith('/blog/')) {
+      setCurrentPage('blog');
+      setViewingPostId(p.replace('/blog/', ''));
+      return;
+    }
+    if (p.startsWith('/blog')) {
+      setCurrentPage('blog');
+      setViewingPostId(null);
+      return;
+    }
+    if (p.startsWith('/meet-the-team')) return setCurrentPage('meetTheTeam');
+    if (p.startsWith('/day-in-the-life')) return setCurrentPage('dayInTheLife');
+    if (p.startsWith('/e-learning')) return setCurrentPage('eLearning');
+    if (p.startsWith('/apply')) return setCurrentPage('applicationProcess');
+    if (p.startsWith('/pros-cons')) return setCurrentPage('prosCons');
+    if (p.startsWith('/benefits')) return setCurrentPage('benefits');
+    setCurrentPage('main');
+    setViewingPostId(null);
+  }, [location.pathname]);
+
   return (
     <div className="font-sans bg-gray-100">
       <Header
@@ -350,7 +485,7 @@ const App: React.FC = () => {
         currentPage={currentPage}
       />
       <main>
-        {renderPage()}
+        {isKnownPath ? renderPage() : <NotFoundPage onGoHome={() => navigate('/')} />}
       </main>
       <Footer navigateTo={navigateTo} />
     </div>

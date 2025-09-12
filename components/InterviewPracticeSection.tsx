@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Card from './common/Card';
 import Button from './common/Button';
+import DOMPurify from 'dompurify';
 
 // --- Data ---
 const interviewQuestions = [
@@ -149,7 +150,7 @@ const PracticeCard: React.FC<PracticeCardProps> = ({ item }) => {
         {feedback && (
           <div className="mt-6 p-4 border-l-4 border-blue-400 bg-blue-50 rounded-r-md">
             <h4 className="font-semibold text-blue-800 mb-2">🤖 AI Feedback:</h4>
-            <div className="text-blue-900 whitespace-pre-wrap text-sm" dangerouslySetInnerHTML={{ __html: feedback.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br />') }}></div>
+            <div className="text-blue-900 whitespace-pre-wrap text-sm" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(feedback.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br />'), { ALLOWED_TAGS: ['strong','br'] }) }}></div>
           </div>
         )}
       </div>
