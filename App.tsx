@@ -167,11 +167,6 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, onGetStartedClick, currentP
             <button onClick={() => navAndClose('applicationProcess')} className={mobileNavLinkClasses('applicationProcess')}>Apply</button>
             <div>
               <h3 className="px-3 py-2 text-gray-400 uppercase tracking-wider">Community</h3>
-<<<<<<< HEAD
-              <button onClick={() => navAndClose('meetTheTeam')} className={mobileNavLinkClasses('meetTheTeam')}>Our Team</button>
-              <button onClick={() => navAndClose('blog')} className={mobileNavLinkClasses('blog')}>Blog</button>
-              <button onClick={() => navAndClose('forum')} className={mobileNavLinkClasses('forum')}>Forum</button>
-=======
               {communityDropdownLinks.map(link => (
                 link.href ? (
                   <a
@@ -179,7 +174,7 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, onGetStartedClick, currentP
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={mobileNavLinkClasses('')} // No active state
+                    className={mobileNavLinkClasses('')}
                   >
                     {link.name}
                   </a>
@@ -193,7 +188,6 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, onGetStartedClick, currentP
                   </button>
                 )
               ))}
->>>>>>> 702f465 (SEO + routing overhaul: path routes, prerendered pages (blog + core), dynamic OG images, JSON-LD breadcrumbs, runtime SEO helper, sitemap/robots; security hardening (rate limit + validation); XSS sanitization; 404 page)
             </div>
             <button
               onClick={() => { onGetStartedClick(); setIsMobileMenuOpen(false); }}

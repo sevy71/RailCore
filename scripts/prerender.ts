@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { BLOG_POSTS_DATA } from '../blogPosts';
+import { BLOG_POSTS_DATA } from '../blogPosts.ts';
 
 const distDir = path.resolve(process.cwd(), 'dist');
 const indexPath = path.join(distDir, 'index.html');
