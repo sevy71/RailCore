@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-
-# Live sitemap URL
-Sitemap: https://railcore.co.uk/sitemap.xml
