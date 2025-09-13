@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
-import { BrowserRouter } from 'react-router-dom';
 
 // Adjust base SEO tags for environment (previews/staging) without breaking prod defaults
 function adjustBaseSeoForEnv() {
