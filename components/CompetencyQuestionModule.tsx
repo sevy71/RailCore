@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import Card from './common/Card'
 import Button from './common/Button'
+import DOMPurify from 'dompurify'
 
 interface CompetencyQuestionModuleProps {
   question: string
@@ -100,9 +101,12 @@ const CompetencyQuestionModule: React.FC<CompetencyQuestionModuleProps> = ({
             <div
               className="text-blue-900 whitespace-pre-wrap text-sm"
               dangerouslySetInnerHTML={{
-                __html: feedback
-                  .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                  .replace(/\n/g, '<br/>'),
+                __html: DOMPurify.sanitize(
+                  feedback
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\n/g, '<br/>'),
+                  { ALLOWED_TAGS: ['strong', 'br'] }
+                ),
               }}
             />
           </div>

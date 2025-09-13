@@ -2,7 +2,12 @@
 module.exports = {
   content: [
     "./index.html",
-    "./{App,components}/**/*.{js,ts,jsx,tsx}",
+    "./{App,constants}.tsx",
+    "./{api,components}/**/*.{js,ts,jsx,tsx}",
+    // Excludes to prevent rebuild loops / heavy scans
+    "!./dist/**/*",
+    "!./node_modules/**/*",
+    "!./public/**/*",
   ],
   theme: {
     extend: {

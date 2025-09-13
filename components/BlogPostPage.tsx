@@ -3,6 +3,7 @@ import { BLOG_POSTS_DATA } from '../blogPosts';
 import { BlogPost, BlogPostContentBlock } from '../types';
 import Button from './common/Button';
 import Card from './common/Card';
+import DOMPurify from 'dompurify';
 
 interface BlogPostPageProps {
   postId: string;
@@ -20,7 +21,7 @@ const renderContentBlock = (block: BlogPostContentBlock, index: number) => {
         return (
           <ul key={index} className="list-disc list-outside space-y-3 pl-5 mb-4">
             {block.content.map((item, i) => (
-              <li key={i} className="text-gray-700 leading-relaxed" dangerouslySetInnerHTML={{ __html: item }} />
+              <li key={i} className="text-gray-700 leading-relaxed" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item, { ALLOWED_TAGS: ['strong','em','a','br'], ALLOWED_ATTR: ['href','target','rel'] }) }} />
             ))}
           </ul>
         );
@@ -30,7 +31,7 @@ const renderContentBlock = (block: BlogPostContentBlock, index: number) => {
        return (
         <div key={index} className="mt-6 p-4 bg-yellow-100 border-l-4 border-railway-orange rounded-r-md">
             <h3 className="font-bold text-lg text-railway-orange mb-2">Top Tips to Prepare</h3>
-            <p className="text-gray-800" dangerouslySetInnerHTML={{ __html: block.content as string }} />
+            <p className="text-gray-800" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(block.content as string, { ALLOWED_TAGS: ['strong','em','a','br'], ALLOWED_ATTR: ['href','target','rel'] }) }} />
         </div>
        )
     default:
